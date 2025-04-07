@@ -9,7 +9,16 @@ export const ONGEKI_CONF = {
 	name: "O.N.G.E.K.I.",
 	playtypes: ["Single"],
 	songData: z.strictObject({
-		genre: z.string(),
+		genre: z.enum([
+			"POPS＆ANIME",
+			"niconico",
+			"東方Project",
+			"VARIETY",
+			"チュウマイ",
+			"オンゲキ",
+			"LUNATIC",
+			"ボーナストラック",
+		]),
 	}),
 } as const satisfies INTERNAL_GAME_CONFIG;
 
@@ -111,19 +120,20 @@ export const ONGEKI_SINGLE_CONF = {
 	scoreRatingAlgs: {
 		rating: {
 			description:
-				"The rating value of this score. This is identical to the system used in game.",
+				"A rating value of this score, capping at +2.0 at SSS+. This is identical to the system used in bright MEMORY and earlier versions.",
 			formatter: ToDecimalPlaces(2),
 		},
 	},
 	sessionRatingAlgs: {
 		naiveRating: {
-			description: "The average of your best 10 ratings this session.",
+			description: "The average of your best 10 classic ratings this session.",
 			formatter: ToDecimalPlaces(2),
 		},
 	},
 	profileRatingAlgs: {
 		naiveRating: {
-			description: "The average of your best 45 scores.",
+			description:
+				"The average of your best 45 classic ratings. This is a simpler variant of the rating algorithm used in bright MEMORY and earlier versions, without distinguishing between new and old charts, and without taking recent scores into account.",
 			formatter: ToDecimalPlaces(2),
 		},
 	},
@@ -158,13 +168,28 @@ export const ONGEKI_SINGLE_CONF = {
 		brightMemory2Omni: "bright MEMORY Act.II Omnimix",
 		brightMemory3: "bright MEMORY Act.III",
 		brightMemory3Omni: "bright MEMORY Act.III Omnimix",
+		refresh: "Re:Fresh",
+		refreshOmni: "Re:Fresh Omnimix",
 	},
 
 	chartData: z.strictObject({
-		displayVersion: z.string(),
+		displayVersion: z.enum([
+			"オンゲキ",
+			"オンゲキ PLUS",
+			"オンゲキ SUMMER",
+			"オンゲキ SUMMER PLUS",
+			"オンゲキ R.E.D.",
+			"オンゲキ R.E.D. PLUS",
+			"オンゲキ bright",
+			"オンゲキ bright MEMORY Act.1",
+			"オンゲキ bright MEMORY Act.2",
+			"オンゲキ bright MEMORY Act.3",
+			"オンゲキ Re:Fresh",
+		]),
 		isReMaster: z.boolean().optional(),
 		maxPlatScore: z.number().int(),
 		inGameID: z.number().int(),
+		chartViewURL: z.string().optional(),
 	}),
 
 	preferences: z.strictObject({}),
